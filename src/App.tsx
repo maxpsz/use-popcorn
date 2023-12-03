@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { PropsWithChildren, Movie as IMovie, WatchedMovie as IWatchedMovie } from "./types";
 
-const tempMovieData = [
+const tempMovieData: IMovie[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
@@ -24,7 +25,7 @@ const tempMovieData = [
   },
 ];
 
-const tempWatchedData = [
+const tempWatchedData: IWatchedMovie[] = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
@@ -47,7 +48,7 @@ const tempWatchedData = [
   },
 ];
 
-const average = (arr) =>
+const average = (arr: number[]) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function Logo() {
@@ -73,7 +74,11 @@ function Search() {
   );
 }
 
-function NumResults({ movies }) {
+type NumResultsProps = {
+  movies: IMovie[];
+}
+
+function NumResults({ movies }: NumResultsProps) {
   return (
     <p className="num-results">
       Found <strong>{movies.length}</strong> results
@@ -81,7 +86,7 @@ function NumResults({ movies }) {
   );
 }
 
-function NavBar({ children }) {
+function NavBar({ children }: PropsWithChildren) {
   return (
     <nav className="nav-bar">
       <Logo />
@@ -90,7 +95,11 @@ function NavBar({ children }) {
   );
 }
 
-function Movie({ movie }) {
+type MovieProps = {
+  movie: IMovie;
+}
+
+function Movie({ movie }: MovieProps) {
   return (
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -105,7 +114,11 @@ function Movie({ movie }) {
   );
 }
 
-function MoviesList({ movies }) {
+type MoviesListProps = {
+  movies: IMovie[];
+}
+
+function MoviesList({ movies }: MoviesListProps) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
@@ -115,7 +128,7 @@ function MoviesList({ movies }) {
   );
 }
 
-function Box({ children }) {
+function Box({ children }: PropsWithChildren) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -128,7 +141,11 @@ function Box({ children }) {
   );
 }
 
-function WatchedMoviesSummary({ watched }) {
+type WatchedMoviesSummaryProps = {
+  watched: IWatchedMovie[];
+}
+
+function WatchedMoviesSummary({ watched }: WatchedMoviesSummaryProps) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
@@ -158,7 +175,11 @@ function WatchedMoviesSummary({ watched }) {
   );
 }
 
-function WatchedMovie({ movie }) {
+type WatchedMovieProps = {
+  movie: IWatchedMovie;
+}
+
+function WatchedMovie({ movie }: WatchedMovieProps) {
   return (
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -181,7 +202,11 @@ function WatchedMovie({ movie }) {
   );
 }
 
-function WatchedMoviesList({ watched }) {
+type WatchedMovieListProps = {
+  watched: IWatchedMovie[];
+}
+
+function WatchedMoviesList({ watched }: WatchedMovieListProps) {
   return (
     <ul className="list">
       {watched.map((movie) => (
@@ -191,7 +216,7 @@ function WatchedMoviesList({ watched }) {
   );
 }
 
-function Main({ children }) {
+function Main({ children }: PropsWithChildren) {
   return <main className="main">{children}</main>;
 }
 
