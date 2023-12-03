@@ -1,5 +1,23 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+
+type StarProps = {
+  onRate: () => void;
+  full: boolean;
+  onHoverIn: () => void;
+  onHoverOut: () => void;
+  color: string;
+  size: number;
+}
+
+type StarRatingProps = {
+  maxRating?: number;
+  color?: string;
+  size?: number;
+  className?: string;
+  messages?: string[];
+  defaultRating?: number;
+  onSetRating?: (rating: number) => void;
+}
 
 const containerStyle = {
   display: "flex",
@@ -11,7 +29,7 @@ const starContainerStyle = {
   display: "flex",
 };
 
-function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
+function Star({ onRate, full = false, onHoverIn, onHoverOut, color, size }: StarProps) {
   const starStyle = {
     display: "block",
     cursor: "pointer",
@@ -55,16 +73,6 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   );
 }
 
-StarRating.PropTypes = {
-  maxRating: PropTypes.number,
-  color: PropTypes.string,
-  size: PropTypes.number,
-  className: PropTypes.string,
-  messages: PropTypes.array,
-  defaultRating: PropTypes.number,
-  onSetRating: PropTypes.func,
-};
-
 export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
@@ -73,13 +81,13 @@ export default function StarRating({
   messages = [],
   defaultRating = 0,
   onSetRating,
-}) {
+}: StarRatingProps) {
   const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
 
   const currentRating = tempRating || rating;
 
-  function handleRating(rating) {
+  function handleRating(rating: number) {
     setRating(rating);
     onSetRating?.(rating);
   }
